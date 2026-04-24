@@ -1,13 +1,20 @@
-# Build estático com Vite e serve com Nginx
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm install
-COPY . .
-RUN npm run build
+# Imagem oficial leve do Node.js
+FROM node:20-alpine
 
-FROM nginx:1.27-alpine AS runner
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Pasta de trabalho dentro do container
+WORKDIR /app
+
+# Copia dependências primeiro (cache do Docker)
+COPY package*.json ./
+
+# Instala libs
+RUN npm install
+
+# Copia o resto do código
+COPY . .
+
+# Porta padrão do Vite
+EXPOSE 5173
+
+# --host libera o acesso de fora do container
+CMD ["npm", "run", "dev", "--", "--host"]

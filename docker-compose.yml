@@ -1,24 +1,17 @@
-services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: pernambuco-dev
-    ports:
-      - "5173:5173"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
-    command: npm run dev -- --host 0.0.0.0
+version: '3.8'
 
-  web-prod:
-    profiles: ["prod"]
+services:
+  pernambuco_web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: pernambuco-prod
     ports:
-      - "8080:80"
+      - "5173:5173"
+    volumes:
+      # Espelha o código local para dentro do container
+      - .:/app
+      # Evita usar a node_modules da máquina host
+      - /app/node_modules
+    environment:
+      # Faz o hot-reload do Vite funcionar dentro do Docker
+      - CHOKIDAR_USEPOLLING=true
