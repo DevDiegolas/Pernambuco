@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Section from "../../components/ui/Section";
 import Icon from "../../components/ui/Icon";
+import Reveal from "../../components/ui/Reveal";
 import { categories } from "../../data/categories";
 import { scrollToSection } from "../../lib/scroll";
 import { SECTIONS } from "../../lib/sections";
@@ -22,12 +23,12 @@ export default function FeaturedCategories({ onPickCategory }: Props) {
       description="Encontre rápido o que precisa, do básico de fundação ao acabamento fino."
     >
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((c) => (
+        {categories.map((c, i) => (
+          <Reveal key={c.slug} delay={i * 70} direction="up">
           <button
-            key={c.slug}
             type="button"
             onClick={() => handleClick(c.slug)}
-            className="card group flex w-full items-start gap-4 p-6 text-left transition hover:-translate-y-0.5 hover:shadow-lg"
+            className="card group flex w-full items-start gap-4 p-6 text-left transition duration-300 hover:-translate-y-1 hover:shadow-lg"
           >
             <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-700 ring-1 ring-brand-200 transition group-hover:bg-brand-600 group-hover:text-white">
               <Icon name={c.icon} className="h-5 w-5" />
@@ -42,6 +43,7 @@ export default function FeaturedCategories({ onPickCategory }: Props) {
               <p className="mt-1 text-sm text-stone-600">{c.description}</p>
             </div>
           </button>
+          </Reveal>
         ))}
       </div>
     </Section>
