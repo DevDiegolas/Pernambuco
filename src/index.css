@@ -6,6 +6,15 @@
   color-scheme: light;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* Compensa a Navbar fixa quando scrolla para uma seção via #anchor */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
 html,
 body,
 #root {

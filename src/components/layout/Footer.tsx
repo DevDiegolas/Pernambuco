@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
 import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import Container from "../ui/Container";
 import Logo from "./Logo";
 import { store } from "../../data/store";
+import { NAV_ITEMS } from "../../lib/sections";
+import { scrollToSection } from "../../lib/scroll";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -43,10 +44,20 @@ export default function Footer() {
             Navegar
           </h3>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/" className="hover:text-white">Início</Link></li>
-            <li><Link to="/produtos" className="hover:text-white">Produtos</Link></li>
-            <li><Link to="/sobre" className="hover:text-white">Sobre</Link></li>
-            <li><Link to="/contato" className="hover:text-white">Contato</Link></li>
+            {NAV_ITEMS.map((item) => (
+              <li key={item.id}>
+                <a
+                  href={`#${item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection(item.id);
+                  }}
+                  className="hover:text-white"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 

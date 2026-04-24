@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
-import { Link } from "react-router-dom";
 import { cn } from "../../lib/cn";
+import { scrollToSection } from "../../lib/scroll";
 
 type Variant = "primary" | "outline" | "ghost";
 
@@ -10,39 +10,45 @@ const variants: Record<Variant, string> = {
   ghost: "btn-ghost",
 };
 
-type CommonProps = {
+type Common = {
   variant?: Variant;
   className?: string;
   children: ReactNode;
 };
 
-type ButtonProps = CommonProps &
+type ButtonProps = Common &
   ButtonHTMLAttributes<HTMLButtonElement> & { as?: "button" };
 
-type LinkProps = CommonProps &
+type AnchorProps = Common &
   AnchorHTMLAttributes<HTMLAnchorElement> & {
     as: "a";
     href: string;
     external?: boolean;
   };
 
-type RouterProps = CommonProps & {
-  as: "link";
-  to: string;
+type ScrollProps = Common & {
+  as: "scroll";
+  to: string; // id de seção
 };
 
-type Props = ButtonProps | LinkProps | RouterProps;
+type Props = ButtonProps | AnchorProps | ScrollProps;
 
 export default function Button(props: Props) {
   const { variant = "primary", className, children } = props;
   const cls = cn(variants[variant], className);
 
-  if (props.as === "link") {
-    const { to } = props;
+  if (props.as === "scroll") {
     return (
-      <Link to={to} className={cls}>
+      <a
+        href={`#${props.to}`}
+        onClick={(e) => {
+          e.preventDefault();
+          scrollToSection(props.to);
+        }}
+        className={cls}
+      >
         {children}
-      </Link>
+      </a>
     );
   }
   if (props.as === "a") {

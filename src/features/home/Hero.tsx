@@ -4,10 +4,14 @@ import Button from "../../components/ui/Button";
 import PlaceholderImage from "../../components/ui/PlaceholderImage";
 import Chip from "../../components/ui/Chip";
 import { store } from "../../data/store";
+import { SECTIONS } from "../../lib/sections";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-ink-900 text-white">
+    <section
+      id={SECTIONS.topo}
+      className="relative overflow-hidden bg-ink-900 text-white"
+    >
       <div
         aria-hidden
         className="absolute inset-0 bg-hero-grid bg-[size:48px_48px] opacity-40"
@@ -29,10 +33,10 @@ export default function Hero() {
             {store.description}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button as="link" to="/produtos" variant="primary">
+            <Button as="scroll" to={SECTIONS.produtos} variant="primary">
               Ver produtos <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button as="link" to="/contato" variant="ghost">
+            <Button as="scroll" to={SECTIONS.contato} variant="ghost">
               <MapPin className="h-4 w-4" /> Como chegar
             </Button>
           </div>

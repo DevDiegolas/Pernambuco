@@ -2,6 +2,7 @@ import { MessageCircle, MapPin } from "lucide-react";
 import Container from "../../components/ui/Container";
 import Button from "../../components/ui/Button";
 import { store } from "../../data/store";
+import { SECTIONS } from "../../lib/sections";
 
 export default function CallToAction() {
   return (
@@ -32,7 +33,7 @@ export default function CallToAction() {
               >
                 <MessageCircle className="h-4 w-4" /> Chamar no WhatsApp
               </Button>
-              <Button as="link" to="/contato" variant="ghost">
+              <Button as="scroll" to={SECTIONS.contato} variant="ghost">
                 <MapPin className="h-4 w-4" /> Ver localização
               </Button>
             </div>
