@@ -9,8 +9,14 @@ export default function ProductCard({ product }: { product: Product }) {
     `Olá! Tenho interesse no produto: ${product.name}. Está disponível?`
   );
   return (
-    <article className="card flex h-full flex-col overflow-hidden transition hover:-translate-y-0.5 hover:shadow-lg">
-      <PlaceholderImage label={product.name} ratio="square" className="rounded-none" />
+    <article className="card group flex h-full flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+      <div className="overflow-hidden">
+        <PlaceholderImage
+          label={product.name}
+          ratio="square"
+          className="rounded-none transition duration-500 group-hover:scale-105"
+        />
+      </div>
       <div className="flex flex-1 flex-col p-5">
         {product.badges && product.badges.length > 0 && (
           <div className="mb-2 flex flex-wrap gap-1.5">
