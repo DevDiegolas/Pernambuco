@@ -73,6 +73,9 @@ coverage
 *.local
 docker-compose.override.yml
 
+# Documentacao
+docs/
+
 # Diversos
 *.pem
 .history
