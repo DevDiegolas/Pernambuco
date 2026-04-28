@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, X, Phone, MessageCircle } from "lucide-react";
 import Container from "../ui/Container";
 import Logo from "./Logo";
@@ -9,33 +9,16 @@ import { scrollToSection, useActiveSection } from "../../lib/scroll";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const active = useActiveSection(NAV_ITEMS.map((n) => n.id));
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const go = (id: string) => {
     setOpen(false);
     scrollToSection(id);
   };
 
-  // No topo: header transparente sobreposto ao Hero escuro.
-  // Após scroll: vidro fosco com hairline para dar legibilidade.
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-30 w-full transition duration-300",
-        scrolled
-          ? "border-b border-stone-200 bg-stone-50/85 backdrop-blur-md saturate-150"
-          : "border-b border-transparent bg-transparent"
-      )}
-    >
-      <Container className="flex h-[72px] items-center justify-between gap-6">
+    <header className="sticky top-0 z-30 w-full border-b border-stone-200/70 bg-stone-50/85 backdrop-blur-md saturate-150">
+      <Container className="flex h-[88px] items-center justify-between gap-6">
         <Logo />
 
         <nav className="hidden items-center gap-7 md:flex">
@@ -49,10 +32,9 @@ export default function Navbar() {
               }}
               className={cn(
                 "text-sm font-medium transition-colors",
-                scrolled ? "text-ink-800" : "text-white/85",
                 active === item.id
                   ? "text-brand-600"
-                  : "hover:text-brand-500"
+                  : "text-ink-800 hover:text-brand-500"
               )}
             >
               {item.label}
@@ -63,10 +45,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-3 md:flex">
           <a
             href={`tel:${store.contact.phoneRaw}`}
-            className={cn(
-              "btn btn-sm btn-outline",
-              !scrolled && "border-white/25 bg-transparent text-white hover:border-white"
-            )}
+            className="btn btn-sm btn-outline"
             style={{ fontWeight: 500 }}
           >
             <Phone className="h-4 w-4" />
@@ -83,12 +62,7 @@ export default function Navbar() {
         </div>
 
         <button
-          className={cn(
-            "grid h-10 w-10 place-items-center rounded-xl border md:hidden",
-            scrolled
-              ? "border-stone-200 bg-white text-ink-900"
-              : "border-white/25 bg-white/10 text-white backdrop-blur"
-          )}
+          className="grid h-10 w-10 place-items-center rounded-xl border border-stone-200 bg-white text-ink-900 md:hidden"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
           onClick={() => setOpen((o) => !o)}
         >
